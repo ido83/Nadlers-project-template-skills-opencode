@@ -1,0 +1,76 @@
+.git
+.gitignore
+.dockerignore
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.csr
+id_rsa*
+id_ed25519*
+secrets/
+credentials/
+
+# AI agent and provider credentials
+.openai/
+.anthropic/
+.claude/settings.local.json
+.claude/.credentials.json
+.gemini/credentials.json
+.gemini/oauth_creds.json
+.codex/
+.aider*
+.openai-key
+.openai-token
+.anthropic-key
+.anthropic-token
+.claude-key
+.claude-token
+.gemini-key
+.gemini-token
+ai-tokens.*
+agent-tokens.*
+llm-tokens.*
+
+# Dependencies and generated output
+node_modules/
+vendor/
+.venv/
+venv/
+env/
+__pycache__/
+dist/
+build/
+out/
+target/
+coverage/
+
+# Logs and caches
+*.log
+logs/
+.cache/
+.parcel-cache/
+.turbo/
+.next/
+.nuxt/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local security scan artifacts
+sbom.cdx.json
+trivy-results.*
+gitleaks-report.*
+kics-results.*
