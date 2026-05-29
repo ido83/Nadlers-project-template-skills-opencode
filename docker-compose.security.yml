@@ -1,0 +1,104 @@
+services:
+  gitleaks:
+    image: zricethezav/gitleaks:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+    command:
+      - detect
+      - --source
+      - /workspace
+      - --redact
+      - --verbose
+
+  trivy-fs:
+    image: aquasec/trivy:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+      - trivy-cache:/root/.cache/trivy
+    command:
+      - fs
+      - --scanners
+      - vuln,secret,misconfig,license
+      - --severity
+      - HIGH,CRITICAL
+      - --exit-code
+      - "1"
+      - /workspace
+
+  trivy-config:
+    image: aquasec/trivy:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+      - trivy-cache:/root/.cache/trivy
+    command:
+      - config
+      - --severity
+      - HIGH,CRITICAL
+      - --exit-code
+      - "1"
+      - /workspace
+
+  trivy-sbom:
+    image: aquasec/trivy:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - trivy-cache:/root/.cache/trivy
+    command:
+      - fs
+      - --format
+      - cyclonedx
+      - --output
+      - /workspace/sbom.cdx.json
+      - /workspace
+
+  kics:
+    image: checkmarx/kics:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+    command:
+      - scan
+      - --path
+      - /workspace
+      - --no-progress
+
+  syft:
+    image: anchore/syft:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    command:
+      - /workspace
+      - -o
+      - cyclonedx-json=/workspace/sbom.cdx.json
+
+  grype:
+    image: anchore/grype:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+      - grype-cache:/root/.cache/grype
+    command:
+      - dir:/workspace
+      - --fail-on
+      - high
+
+  semgrep:
+    image: semgrep/semgrep:latest
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:ro
+    command:
+      - semgrep
+      - scan
+      - --config
+      - auto
+      - /workspace
+
+volumes:
+  trivy-cache:
+  grype-cache:
