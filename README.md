@@ -6,12 +6,13 @@ Project-local opencode skills and a Docker Compose based security scanning toolk
 
 - `.opencode/skills/` contains project skills loaded by opencode.
 - `.opencode/skills/mr/SKILL.md` adds merge request and pull request workflows.
+- `.opencode/skills/jira-user-story/SKILL.md` adds Jira user story writing workflows.
 - `docker-compose.security.yml` runs common security scanners in containers.
 - `.gitignore` and `.dockerignore` exclude local secrets, generated output, caches, and scan artifacts.
 
 ## opencode Skills
 
-The repository includes skills for backend, frontend, fullstack, database, DevOps, testing, performance, code review, README documentation, cyber security, and merge requests.
+The repository includes skills for backend, frontend, fullstack, database, DevOps, testing, performance, code review, README documentation, cyber security, merge requests, and Jira user stories.
 
 The `mr` skill is used when preparing or reviewing merge requests and pull requests. It focuses on:
 
@@ -19,6 +20,13 @@ The `mr` skill is used when preparing or reviewing merge requests and pull reque
 - Testing and risk notes.
 - Review findings with file and line references.
 - Avoiding commits, pushes, or remote MR changes unless explicitly requested.
+
+The `jira-user-story` skill is used when creating or improving Jira stories, backlog items, epics, and feature tickets. It includes:
+
+- Subject and user story structure.
+- Context info, scope, dependencies, and assumptions.
+- Mermaid diagram guidance.
+- Motivation, success criteria, Definition of Done, and delivery checklist.
 
 Restart opencode after changing files under `.opencode/skills/`; running sessions keep the already-loaded configuration.
 
